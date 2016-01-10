@@ -25,8 +25,8 @@ dependencies {
 
 intellij {
     version 'IC-15.0.2'
-    pluginName 'twitch-chat'
+    pluginName 'Twitch Chat'
 }
 
-group 'guacamoledragon.plugin'
+group 'club.guacamoledragon.plugin'
 version '1.0-SNAPSHOT'
