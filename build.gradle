@@ -21,6 +21,7 @@ repositories {
 
 dependencies {
     compile 'org.jetbrains.kotlin:kotlin-stdlib:1.0.0-beta-4589'
+    compile 'io.socket:socket.io-client:0.6.3'
 }
 
 intellij {
