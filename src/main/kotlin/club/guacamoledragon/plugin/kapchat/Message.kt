@@ -4,10 +4,10 @@ import org.json.JSONObject
 import java.awt.Color
 
 
-data class KapChatMessage(val nick: String, val message: String, val emotes: String, val userData: UserData) {
+data class Message(val nick: String, val message: String, val emotes: String, val userData: UserData) {
 
     companion object {
-        fun parse(data: JSONObject): KapChatMessage {
+        fun parse(data: JSONObject): Message {
             val message = data.optString("message")
             val nick = data.optString("nick")
 
@@ -23,7 +23,7 @@ data class KapChatMessage(val nick: String, val message: String, val emotes: Str
             val userType = data.optString("userType")
             */
 
-            return KapChatMessage(nick, message, emotes, UserData(color, displayName))
+            return Message(nick, message, emotes, UserData(color, displayName))
         }
     }
 }
