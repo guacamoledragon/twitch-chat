@@ -16,6 +16,7 @@ class Client(val channel: String) {
             socket.on(Socket.EVENT_MESSAGE, { args ->
                 val data = args[0]
                 if (data is JSONObject) {
+                    // TODO: Should I filter out bot messages?
                     handler(Message.parse(data))
                 }
             })
