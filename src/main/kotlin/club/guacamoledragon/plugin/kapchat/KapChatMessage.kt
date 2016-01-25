@@ -13,8 +13,9 @@ data class KapChatMessage(val nick: String, val message: String, val emotes: Str
 
             val emotes = data.optString("emotes") // TODO: Parse into a list of emotes
 
-            val color = Color.decode(data.optString("color", "#FFFFFF"))
-            val displayName = data.optString("displayName")
+            val userData = data.getJSONObject("userData")
+            val color = Color.decode(userData.optString("color", "#FFFFFF"))
+            val displayName = userData.optString("displayName")
 
             /* TODO: Use when needed.
             val subscriber = data.optBoolean("subscriber")
