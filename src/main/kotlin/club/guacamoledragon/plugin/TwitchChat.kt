@@ -9,6 +9,7 @@ import com.intellij.ui.content.ContentFactory
 
 class TwitchChat: ToolWindowFactory {
     private val chatroom = ChatRoom()
+    // TODO: Don't hardcode the channel n00b
     private val channel = "pianoimproman"
     private val client = Client(channel)
 
@@ -20,7 +21,7 @@ class TwitchChat: ToolWindowFactory {
 
     override fun createToolWindowContent(project: Project, toolWindow: ToolWindow) {
         val contentFactory = ContentFactory.SERVICE.getInstance()
-        val content = contentFactory.createContent(chatroom.panel, "", false)
+        val content = contentFactory.createContent(chatroom.panel, channel, false)
         toolWindow.contentManager.addContent(content)
         client.connect()
     }
