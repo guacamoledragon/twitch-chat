@@ -7,7 +7,6 @@ import javax.swing.JScrollPane
 import javax.swing.JTextPane
 import javax.swing.text.*
 
-
 class ChatRoom {
     private val styledDocument = DefaultStyledDocument(StyleContext())
 
