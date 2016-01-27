@@ -5,6 +5,7 @@ import java.awt.Color
 import javax.swing.JPanel
 import javax.swing.JScrollPane
 import javax.swing.JTextPane
+import javax.swing.SwingUtilities
 import javax.swing.text.*
 
 class ChatRoom {
@@ -20,9 +21,11 @@ class ChatRoom {
     }
 
     fun appendMessage(nick: String, message: String, color: Color) {
-        val set = SimpleAttributeSet()
-        set.addAttribute(StyleConstants.Foreground, color)
-        styledDocument.insertString(styledDocument.length, nick + ": ", set)
-        styledDocument.insertString(styledDocument.length, message + "\n", null)
+        SwingUtilities.invokeLater {
+            val set = SimpleAttributeSet()
+            set.addAttribute(StyleConstants.Foreground, color)
+            styledDocument.insertString(styledDocument.length, nick + ": ", set)
+            styledDocument.insertString(styledDocument.length, message + "\n", null)
+        }
     }
 }
