@@ -30,6 +30,8 @@ class Client(val channel: String) {
             })
         }
 
+    var disconnectHandler = { -> }
+
     init {
         socket = IO.socket(SOCKET_URL)
 
@@ -48,6 +50,7 @@ class Client(val channel: String) {
 
         socket.on(Socket.EVENT_DISCONNECT, {
             println("You were disconnected from the socket server.")
+            disconnectHandler()
         })
     }
 
@@ -55,7 +58,8 @@ class Client(val channel: String) {
         socket.connect()
     }
 
-    fun disconnect() {
+    fun disconnect(cb: () -> Unit = { -> }) {
+        disconnectHandler = cb
         socket.disconnect()
     }
 }
