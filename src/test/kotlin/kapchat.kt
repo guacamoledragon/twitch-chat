@@ -1,6 +1,8 @@
 import club.guacamoledragon.plugin.kapchat.Client
 import club.guacamoledragon.plugin.ui.ChatRoom
 import java.awt.Dimension
+import java.awt.event.WindowAdapter
+import java.awt.event.WindowEvent
 import javax.swing.JFrame
 import javax.swing.WindowConstants
 
@@ -23,6 +25,12 @@ fun main(args: Array<String>) {
     }
 
     kapchatClient.connect()
+
+    frame.addWindowListener(object: WindowAdapter() {
+        override fun windowClosing(e: WindowEvent?) {
+            kapchatClient.disconnect()
+        }
+    })
 }
 
 // Part 4: 1080p @ 30fps/3000bps 02/09/2016
