@@ -2,6 +2,7 @@ import club.guacamoledragon.plugin.kapchat.Client
 import club.guacamoledragon.plugin.ui.ChatRoom
 import java.awt.Dimension
 import javax.swing.JFrame
+import javax.swing.WindowConstants
 
 fun main(args: Array<String>) {
     val frame = JFrame("Twitch Chat")
@@ -10,6 +11,7 @@ fun main(args: Array<String>) {
     frame.size = Dimension(500, 500)
     frame.contentPane.add(chatroom.panel)
     frame.setLocationRelativeTo(null)
+    frame.defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
     frame.isVisible = true
 
     val channel = "bacon_donut"
@@ -22,3 +24,5 @@ fun main(args: Array<String>) {
 
     kapchatClient.connect()
 }
+
+// Part 4: 1080p @ 30fps/3000bps 02/09/2016
