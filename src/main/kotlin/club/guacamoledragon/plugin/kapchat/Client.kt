@@ -8,7 +8,7 @@ const val SOCKET_URL: String = "https://tmi-relay.nightdev.com/"
 
 // TODO: Implement proper logging
 class Client(val channel: String) {
-    private lateinit var socket: Socket
+    val socket: Socket = IO.socket(SOCKET_URL)
 
     var messageHandler: (Message) -> Unit = { msg -> }
         set(handler) {
@@ -33,8 +33,6 @@ class Client(val channel: String) {
     var disconnectHandler = { -> }
 
     init {
-        socket = IO.socket(SOCKET_URL)
-
         socket.on("ohai", {
             println("Connected.")
             socket.emit("join", channel)

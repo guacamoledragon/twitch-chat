@@ -21,7 +21,7 @@ fun main(args: Array<String>) {
         chatroom.appendMessage(msg.nick, msg.message, msg.userData.color)
     }
 
-    var kapchatClient: Client = Client("bacon_donut")
+    var kapchatClient: Client = Client("MrsViolence")
     kapchatClient.connect()
     kapchatClient.messageHandler = handler
 
@@ -41,3 +41,4 @@ fun main(args: Array<String>) {
 }
 
 // Part 4: 1080p @ 30fps/3000bps 02/09/2016
+// Part 5: 1080p @ 30fps/3000bps 02/11/2016
