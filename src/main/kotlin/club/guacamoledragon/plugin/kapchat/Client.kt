@@ -30,13 +30,12 @@ class Client(val channel: String) {
             })
         }
 
-    private var onDisconnect = { -> }
-    private var onJoinChannel = { -> }
-    private var onConnect = { -> }
+    private var onDisconnect = {}
+    private var onJoinChannel = {}
+    private var onConnect = {}
 
     init {
-        socket.on("ohai", {
-            println("Connected. ${socket.connected()}")
+        socket.once("ohai", {
             onConnect()
             socket.emit("join", channel)
         })
@@ -56,12 +55,12 @@ class Client(val channel: String) {
         })
     }
 
-    fun connect(onConnect: () -> Unit = { -> }) {
+    fun connect(onConnect: () -> Unit = {}) {
         this.onConnect = onConnect
         socket.connect()
     }
 
-    fun disconnect(onDisconnect: () -> Unit = { -> }) {
+    fun disconnect(onDisconnect: () -> Unit = {}) {
         this.onDisconnect = onDisconnect
         socket.disconnect()
     }
