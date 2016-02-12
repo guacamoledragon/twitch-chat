@@ -1,6 +1,7 @@
 package club.guacamoledragon.plugin
 
 import club.guacamoledragon.plugin.kapchat.Client
+import club.guacamoledragon.plugin.kapchat.Message
 import club.guacamoledragon.plugin.ui.ChatRoom
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.wm.ToolWindow
@@ -11,11 +12,23 @@ class TwitchChat: ToolWindowFactory {
     private val chatroom = ChatRoom()
     // TODO: Don't hardcode the channel n00b
     private val channel = "pianoimproman"
-    private val client = Client(channel)
+    private var client = Client(channel)
+
+    private val handler = { msg: Message ->
+        chatroom.appendMessage(msg.nick, msg.message, msg.userData.color)
+    }
 
     init {
         client.messageHandler = { msg ->
             chatroom.appendMessage(msg.nick, msg.message, msg.userData.color)
+        }
+
+        chatroom.goButton.addActionListener { event ->
+            client.disconnect({
+                client = Client(chatroom.channelField.text)
+                client.connect()
+                client.messageHandler = handler
+            })
         }
     }
 

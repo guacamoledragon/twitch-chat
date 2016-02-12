@@ -8,7 +8,7 @@ const val SOCKET_URL: String = "https://tmi-relay.nightdev.com/"
 
 // TODO: Implement proper logging
 class Client(val channel: String) {
-    private lateinit var socket: Socket
+    val socket: Socket = IO.socket(SOCKET_URL)
 
     var messageHandler: (Message) -> Unit = { msg -> }
         set(handler) {
@@ -30,11 +30,13 @@ class Client(val channel: String) {
             })
         }
 
-    init {
-        socket = IO.socket(SOCKET_URL)
+    private var onDisconnect = {}
+    private var onJoinChannel = {}
+    private var onConnect = {}
 
-        socket.on("ohai", {
-            println("Connected.")
+    init {
+        socket.once("ohai", {
+            onConnect()
             socket.emit("join", channel)
         })
 
@@ -43,19 +45,23 @@ class Client(val channel: String) {
 
             socket.once("joined", {
                 println("Joined channel: $channel.")
+                onJoinChannel()
             })
         })
 
         socket.on(Socket.EVENT_DISCONNECT, {
             println("You were disconnected from the socket server.")
+            onDisconnect()
         })
     }
 
-    fun connect() {
+    fun connect(onConnect: () -> Unit = {}) {
+        this.onConnect = onConnect
         socket.connect()
     }
 
-    fun disconnect() {
+    fun disconnect(onDisconnect: () -> Unit = {}) {
+        this.onDisconnect = onDisconnect
         socket.disconnect()
     }
 }

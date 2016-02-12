@@ -2,21 +2,28 @@ package club.guacamoledragon.plugin.ui
 
 import java.awt.BorderLayout
 import java.awt.Color
-import javax.swing.JPanel
-import javax.swing.JScrollPane
-import javax.swing.JTextPane
-import javax.swing.SwingUtilities
+import java.awt.event.ActionEvent
+import java.awt.event.ActionListener
+import javax.swing.*
 import javax.swing.text.*
 
 class ChatRoom {
     private val styledDocument = DefaultStyledDocument(StyleContext())
 
     val textPane: JTextPane = JTextPane(styledDocument)
+    val channelField: JTextField = JTextField()
+    val goButton: JButton = JButton("Go!")
     val panel: JPanel = JPanel(BorderLayout())
 
     init {
         val caret: DefaultCaret = textPane.caret as DefaultCaret
         caret.updatePolicy = DefaultCaret.ALWAYS_UPDATE
+
+        val channelSelectPanel = JPanel(BorderLayout())
+        channelSelectPanel.add(channelField, BorderLayout.CENTER)
+        channelSelectPanel.add(goButton, BorderLayout.EAST)
+
+        panel.add(channelSelectPanel, BorderLayout.NORTH)
         panel.add(JScrollPane(textPane), BorderLayout.CENTER)
     }
 

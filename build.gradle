@@ -18,11 +18,15 @@ apply plugin: 'java'
 
 repositories {
     mavenCentral()
+    maven {
+        url "http://repository.jetbrains.com/all"
+    }
 }
 
 dependencies {
     compile 'org.jetbrains.kotlin:kotlin-stdlib:1.0.0-beta-4589'
-    compile 'io.socket:socket.io-client:0.6.3'
+    compile 'io.socket:socket.io-client:0.7.0'
+    testCompile 'org.jetbrains.spek:spek:0.1.191'
 }
 
 intellij {
