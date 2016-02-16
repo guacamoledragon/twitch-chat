@@ -8,7 +8,7 @@ buildscript {
 }
 
 plugins {
-    id "org.jetbrains.intellij" version "0.0.37"
+    id "org.jetbrains.intellij" version "0.0.40"
 }
 
 apply plugin: 'idea'
@@ -30,8 +30,8 @@ dependencies {
 }
 
 intellij {
-    version 'IC-15.0.3'
-    pluginName 'Twitch Chat'
+    // Defaults values are plenty good!
+    // https://github.com/JetBrains/gradle-intellij-plugin
 }
 
 group 'club.guacamoledragon.plugin'
