@@ -1,14 +1,17 @@
 buildscript {
+    ext.kotlin_version = '1.0.0'
+
     repositories {
         mavenCentral()
     }
+
     dependencies {
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.0-beta-4589'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
 plugins {
-    id "org.jetbrains.intellij" version "0.0.37"
+    id "org.jetbrains.intellij" version "0.0.40"
 }
 
 apply plugin: 'idea'
@@ -24,14 +27,21 @@ repositories {
 }
 
 dependencies {
-    compile 'org.jetbrains.kotlin:kotlin-stdlib:1.0.0-beta-4589'
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile 'io.socket:socket.io-client:0.7.0'
-    testCompile 'org.jetbrains.spek:spek:0.1.191'
+    testCompile 'org.jetbrains.spek:spek:0.1.195'
+}
+
+idea {
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
 }
 
 intellij {
-    version 'IC-15.0.3'
-    pluginName 'Twitch Chat'
+    // Defaults values are plenty good!
+    // https://github.com/JetBrains/gradle-intellij-plugin
 }
 
 group 'club.guacamoledragon.plugin'
