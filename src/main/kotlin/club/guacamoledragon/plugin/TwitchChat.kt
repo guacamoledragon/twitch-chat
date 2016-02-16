@@ -19,16 +19,17 @@ class TwitchChat: ToolWindowFactory {
     }
 
     init {
-        client.onMessage = { msg ->
+        client.onMessage { msg ->
             chatroom.appendMessage(msg.nick, msg.message, msg.userData.color)
         }
 
         chatroom.goButton.addActionListener { event ->
-            client.disconnect({
+            client.onDisconnect {
                 client = Client(chatroom.channelField.text)
-                client.connect()
-                client.onMessage = handler
-            })
+                client
+                        .onMessage(handler)
+                        .connect()
+            }
         }
     }
 
