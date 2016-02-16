@@ -10,7 +10,11 @@ const val SOCKET_URL: String = "https://tmi-relay.nightdev.com/"
 class Client(val channel: String) {
     val socket: Socket = IO.socket(SOCKET_URL)
 
-    var messageHandler: (Message) -> Unit = { msg -> }
+    private var onConnect: () -> Unit = {}
+
+    private var onJoin: () -> Unit = {}
+
+    private var onMessage: (Message) -> Unit = { msg -> }
         set(handler) {
             socket.off(Socket.EVENT_MESSAGE)
             socket.on(Socket.EVENT_MESSAGE, { args ->
@@ -22,7 +26,7 @@ class Client(val channel: String) {
             })
         }
 
-    var clearchatHandler: () -> Unit = {}
+    private var onClearChat: () -> Unit = {}
         set(handler) {
             socket.off("clearchat")
             socket.on("clearchat", {
@@ -30,9 +34,7 @@ class Client(val channel: String) {
             })
         }
 
-    private var onDisconnect = {}
-    private var onJoinChannel = {}
-    private var onConnect = {}
+    private var onDisconnect: () -> Unit = {}
 
     init {
         socket.once("ohai", {
@@ -45,7 +47,7 @@ class Client(val channel: String) {
 
             socket.once("joined", {
                 println("Joined channel: $channel.")
-                onJoinChannel()
+                onJoin()
             })
         })
 
@@ -55,13 +57,38 @@ class Client(val channel: String) {
         })
     }
 
-    fun connect(onConnect: () -> Unit = {}) {
-        this.onConnect = onConnect
-        socket.connect()
+    fun onConnect(handler: () -> Unit): Client {
+        this.onConnect = handler
+        return this
     }
 
-    fun disconnect(onDisconnect: () -> Unit = {}) {
-        this.onDisconnect = onDisconnect
+    fun onJoin(handler: () -> Unit): Client {
+        this.onJoin = handler
+        return this
+    }
+
+    fun onMessage(handler: (Message) -> Unit): Client {
+        this.onMessage = handler
+        return this
+    }
+
+    fun onClearChat(handler: () -> Unit): Client {
+        this.onClearChat = handler
+        return this
+    }
+
+    fun onDisconnect(handler: () -> Unit): Client {
+        this.onDisconnect = handler
+        return this
+    }
+
+    fun connect(): Client {
+        socket.connect()
+        return this
+    }
+
+    fun disconnect(): Client {
         socket.disconnect()
+        return this
     }
 }

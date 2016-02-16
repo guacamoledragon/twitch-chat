@@ -9,16 +9,16 @@ class ClientSpecs : Spek() {
         given("a client with channel set to MrsViolence") {
             val client = Client("MrsViolence")
 
-            on("connecting") {
-                client.connect {
+            client.onConnect {
+                on("connecting") {
                     it("should connect") {
                         shouldBeTrue(client.socket.connected())
                     }
                 }
             }
 
-            on("disconnect") {
-                client.disconnect {
+            client.onDisconnect {
+                on("disconnect") {
                     it("should disconnect") {
                         shouldBeFalse(client.socket.connected())
                     }

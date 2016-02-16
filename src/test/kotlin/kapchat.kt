@@ -17,20 +17,27 @@ fun main(args: Array<String>) {
     frame.defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
     frame.isVisible = true
 
-    val handler = { msg: Message ->
+    var kapchatClient: Client = Client("MrsViolence")
+
+    val onMessageHandler = { msg: Message ->
         chatroom.appendMessage(msg.nick, msg.message, msg.userData.color)
     }
 
-    var kapchatClient: Client = Client("MrsViolence")
-    kapchatClient.connect()
-    kapchatClient.messageHandler = handler
+    val onDisconnectHandler: () -> Unit = {
+        kapchatClient = Client(chatroom.channelField.text)
+        kapchatClient
+                .onMessage(onMessageHandler)
+                .connect()
+    }
+
+
+    kapchatClient
+            .onMessage(onMessageHandler)
+            .onDisconnect(onDisconnectHandler)
+            .connect()
 
     chatroom.goButton.addActionListener { event ->
-        kapchatClient.disconnect({
-            kapchatClient = Client(chatroom.channelField.text)
-            kapchatClient.connect()
-            kapchatClient.messageHandler = handler
-        })
+        kapchatClient.disconnect()
     }
 
     frame.addWindowListener(object: WindowAdapter() {
@@ -42,3 +49,4 @@ fun main(args: Array<String>) {
 
 // Part 4: 1080p @ 30fps/3000bps 02/09/2016
 // Part 5: 1080p @ 30fps/3000bps 02/11/2016
+// Part 6: 1080p @ 30fps/3000bps 02/11/2016
