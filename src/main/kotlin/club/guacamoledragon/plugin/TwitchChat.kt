@@ -19,7 +19,7 @@ class TwitchChat: ToolWindowFactory {
     }
 
     init {
-        client.messageHandler = { msg ->
+        client.onMessage = { msg ->
             chatroom.appendMessage(msg.nick, msg.message, msg.userData.color)
         }
 
@@ -27,7 +27,7 @@ class TwitchChat: ToolWindowFactory {
             client.disconnect({
                 client = Client(chatroom.channelField.text)
                 client.connect()
-                client.messageHandler = handler
+                client.onMessage = handler
             })
         }
     }

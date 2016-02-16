@@ -10,7 +10,11 @@ const val SOCKET_URL: String = "https://tmi-relay.nightdev.com/"
 class Client(val channel: String) {
     val socket: Socket = IO.socket(SOCKET_URL)
 
-    var messageHandler: (Message) -> Unit = { msg -> }
+    var onConnect: () -> Unit = {}
+
+    var onJoin: () -> Unit = {}
+
+    var onMessage: (Message) -> Unit = { msg -> }
         set(handler) {
             socket.off(Socket.EVENT_MESSAGE)
             socket.on(Socket.EVENT_MESSAGE, { args ->
@@ -22,7 +26,7 @@ class Client(val channel: String) {
             })
         }
 
-    var clearchatHandler: () -> Unit = {}
+    var onClearChat: () -> Unit = {}
         set(handler) {
             socket.off("clearchat")
             socket.on("clearchat", {
@@ -30,9 +34,7 @@ class Client(val channel: String) {
             })
         }
 
-    private var onDisconnect = {}
-    private var onJoinChannel = {}
-    private var onConnect = {}
+    var onDisconnect: () -> Unit = {}
 
     init {
         socket.once("ohai", {
@@ -45,7 +47,7 @@ class Client(val channel: String) {
 
             socket.once("joined", {
                 println("Joined channel: $channel.")
-                onJoinChannel()
+                onJoin()
             })
         })
 

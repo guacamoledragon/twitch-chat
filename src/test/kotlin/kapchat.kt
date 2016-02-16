@@ -23,13 +23,13 @@ fun main(args: Array<String>) {
 
     var kapchatClient: Client = Client("MrsViolence")
     kapchatClient.connect()
-    kapchatClient.messageHandler = handler
+    kapchatClient.onMessage = handler
 
     chatroom.goButton.addActionListener { event ->
         kapchatClient.disconnect({
             kapchatClient = Client(chatroom.channelField.text)
             kapchatClient.connect()
-            kapchatClient.messageHandler = handler
+            kapchatClient.onMessage = handler
         })
     }
 
