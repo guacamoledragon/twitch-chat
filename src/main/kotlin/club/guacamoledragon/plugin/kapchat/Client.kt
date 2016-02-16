@@ -10,11 +10,11 @@ const val SOCKET_URL: String = "https://tmi-relay.nightdev.com/"
 class Client(val channel: String) {
     val socket: Socket = IO.socket(SOCKET_URL)
 
-    var onConnect: () -> Unit = {}
+    private var onConnect: () -> Unit = {}
 
-    var onJoin: () -> Unit = {}
+    private var onJoin: () -> Unit = {}
 
-    var onMessage: (Message) -> Unit = { msg -> }
+    private var onMessage: (Message) -> Unit = { msg -> }
         set(handler) {
             socket.off(Socket.EVENT_MESSAGE)
             socket.on(Socket.EVENT_MESSAGE, { args ->
@@ -26,7 +26,7 @@ class Client(val channel: String) {
             })
         }
 
-    var onClearChat: () -> Unit = {}
+    private var onClearChat: () -> Unit = {}
         set(handler) {
             socket.off("clearchat")
             socket.on("clearchat", {
@@ -34,7 +34,7 @@ class Client(val channel: String) {
             })
         }
 
-    var onDisconnect: () -> Unit = {}
+    private var onDisconnect: () -> Unit = {}
 
     init {
         socket.once("ohai", {
@@ -55,6 +55,31 @@ class Client(val channel: String) {
             println("You were disconnected from the socket server.")
             onDisconnect()
         })
+    }
+
+    fun onConnect(handler: () -> Unit): Client {
+        this.onConnect = handler
+        return this
+    }
+
+    fun onJoin(handler: () -> Unit): Client {
+        this.onJoin = handler
+        return this
+    }
+
+    fun onMessage(handler: (Message) -> Unit): Client {
+        this.onMessage = handler
+        return this
+    }
+
+    fun onClearChat(handler: () -> Unit): Client {
+        this.onClearChat = handler
+        return this
+    }
+
+    fun onDisconnect(handler: () -> Unit): Client {
+        this.onDisconnect = handler
+        return this
     }
 
     fun connect(onConnect: () -> Unit = {}) {
