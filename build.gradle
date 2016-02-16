@@ -29,6 +29,13 @@ dependencies {
     testCompile 'org.jetbrains.spek:spek:0.1.191'
 }
 
+idea {
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
+}
+
 intellij {
     // Defaults values are plenty good!
     // https://github.com/JetBrains/gradle-intellij-plugin
