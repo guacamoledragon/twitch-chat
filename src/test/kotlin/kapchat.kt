@@ -29,7 +29,7 @@ fun main(args: Array<String>) {
         kapchatClient.disconnect({
             kapchatClient = Client(chatroom.channelField.text)
             kapchatClient.connect()
-            kapchatClient.onMessage = handler
+            kapchatClient.onMessage(handler)
         })
     }
 
