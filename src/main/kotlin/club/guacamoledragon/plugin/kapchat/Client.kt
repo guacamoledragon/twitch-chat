@@ -82,13 +82,13 @@ class Client(val channel: String) {
         return this
     }
 
-    fun connect(onConnect: () -> Unit = {}) {
-        this.onConnect = onConnect
+    fun connect(): Client {
         socket.connect()
+        return this
     }
 
-    fun disconnect(onDisconnect: () -> Unit = {}) {
-        this.onDisconnect = onDisconnect
+    fun disconnect(): Client {
         socket.disconnect()
+        return this
     }
 }
