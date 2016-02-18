@@ -7,36 +7,51 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.wm.ToolWindow
 import com.intellij.openapi.wm.ToolWindowFactory
 import com.intellij.ui.content.ContentFactory
+import javax.swing.SwingUtilities
 
-class TwitchChat: ToolWindowFactory {
+class TwitchChat : ToolWindowFactory {
     private val chatroom = ChatRoom()
-    // TODO: Don't hardcode the channel n00b
-    private val channel = "pianoimproman"
-    private var client = Client(channel)
+    private var client = Client("")
 
     private val handler = { msg: Message ->
         chatroom.appendMessage(msg.nick, msg.message, msg.userData.color)
     }
 
-    init {
-        client.onMessage { msg ->
-            chatroom.appendMessage(msg.nick, msg.message, msg.userData.color)
-        }
+    private val contentFactory = ContentFactory.SERVICE.getInstance()
+    private val content = contentFactory.createContent(chatroom.panel, client.channel, false)
 
+    init {
         chatroom.goButton.addActionListener { event ->
-            client.onDisconnect {
-                client = Client(chatroom.channelField.text)
-                client
-                        .onMessage(handler)
-                        .connect()
+            client.disconnect()
+
+            client = Client(chatroom.channelField.text)
+            setupClient(client)
+            client.connect()
+        }
+    }
+
+    private fun setupClient(client: Client) {
+        client
+            .onConnect {
+                updateDisplayName("Connecting...")
             }
+            .onJoin {
+                updateDisplayName("${client.channel}")
+            }
+            .onMessage(handler)
+            .onDisconnect {
+                updateDisplayName("Disconnected from ${client.channel}")
+                chatroom.clear()
+            }
+    }
+
+    private fun updateDisplayName(displayName: String) {
+        SwingUtilities.invokeAndWait {
+            content.displayName = displayName
         }
     }
 
     override fun createToolWindowContent(project: Project, toolWindow: ToolWindow) {
-        val contentFactory = ContentFactory.SERVICE.getInstance()
-        val content = contentFactory.createContent(chatroom.panel, channel, false)
         toolWindow.contentManager.addContent(content)
-        client.connect()
     }
 }

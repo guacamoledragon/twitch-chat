@@ -35,4 +35,10 @@ class ChatRoom {
             styledDocument.insertString(styledDocument.length, message + "\n", null)
         }
     }
+
+    fun clear() {
+        SwingUtilities.invokeAndWait {
+            styledDocument.remove(0, styledDocument.length)
+        }
+    }
 }
