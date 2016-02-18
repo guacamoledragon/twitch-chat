@@ -5,7 +5,7 @@
 
 # TODO
 - [ ] Add ability to set twitch channel
-- [ ] Add Icon
-- [ ] Fix the ugly font in UI (only visible as a plugin)
 - [ ] Add logging (SLF4J)
+- [ ] Add Twitch Icon
 - [ ] Add Team City integration for CI
+- [ ] Fix the ugly font in UI (only visible as a plugin)
