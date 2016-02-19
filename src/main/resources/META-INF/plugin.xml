@@ -26,7 +26,10 @@
     -->
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow id="Twitch Chat" anchor="right" factoryClass="club.guacamoledragon.plugin.TwitchChat"/>
+        <toolWindow id="Twitch Chat"
+                    anchor="right"
+                    factoryClass="club.guacamoledragon.plugin.TwitchChat"
+                    icon="/club/guacamoledragon/plugin/icons/glitch-icon.png"/>
     </extensions>
 
     <actions>
