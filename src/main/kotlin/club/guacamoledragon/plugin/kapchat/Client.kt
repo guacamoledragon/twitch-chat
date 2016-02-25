@@ -3,11 +3,12 @@ package club.guacamoledragon.plugin.kapchat
 import io.socket.client.IO
 import io.socket.client.Socket
 import org.json.JSONObject
+import org.slf4j.LoggerFactory
 
 const val SOCKET_URL: String = "https://tmi-relay.nightdev.com/"
 
-// TODO: Implement proper logging
 class Client(val channel: String) {
+    val logger = LoggerFactory.getLogger(this.javaClass)
     val socket: Socket = IO.socket(SOCKET_URL)
 
     private var onConnect: () -> Unit = {}
@@ -30,6 +31,7 @@ class Client(val channel: String) {
         set(handler) {
             socket.off("clearchat")
             socket.on("clearchat", {
+                logger.info("Chat cleared.")
                 handler()
             })
         }
@@ -37,22 +39,24 @@ class Client(val channel: String) {
     private var onDisconnect: () -> Unit = {}
 
     init {
+        logger.trace("Socket server: $SOCKET_URL")
+
         socket.once("ohai", {
             onConnect()
             socket.emit("join", channel)
         })
 
         socket.on("much connect", {
-            println("Waiting to join channel...")
+            logger.info("Waiting to join channel...")
 
             socket.once("joined", {
-                println("Joined channel: $channel.")
+                logger.info("Joined channel: $channel.")
                 onJoin()
             })
         })
 
         socket.on(Socket.EVENT_DISCONNECT, {
-            println("You were disconnected from the socket server.")
+            logger.info("You were disconnected from the socket server.")
             onDisconnect()
         })
     }
