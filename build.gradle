@@ -45,7 +45,7 @@ intellij {
 }
 
 release {
-    tagTemplate 'v${version}'
+    tagTemplate = 'v$version'
 }
 
 task deleteLockFile(type: Delete) {
