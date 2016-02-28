@@ -1,3 +1,5 @@
+package club.guacamoledragon.plugin.driver
+
 import club.guacamoledragon.plugin.kapchat.Client
 import club.guacamoledragon.plugin.kapchat.Message
 import club.guacamoledragon.plugin.ui.ChatRoom
