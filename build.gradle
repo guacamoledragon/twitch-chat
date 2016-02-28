@@ -12,6 +12,7 @@ buildscript {
 
 plugins {
     id "org.jetbrains.intellij" version "0.0.40"
+    id 'net.researchgate.release' version '2.3.4'
 }
 
 apply plugin: 'org.jetbrains.intellij'
