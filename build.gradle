@@ -40,8 +40,7 @@ idea {
 }
 
 intellij {
-    // Defaults values are plenty good!
-    // https://github.com/JetBrains/gradle-intellij-plugin
+    version = 'IC-15.0.4'
 }
 
 group 'club.guacamoledragon.plugin'
