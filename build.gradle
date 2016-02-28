@@ -43,5 +43,9 @@ intellij {
     version = 'IC-15.0.4'
 }
 
+task deleteLockFile(type: Delete) {
+    delete ".gradle/$gradle.gradleVersion/taskArtifacts/cache.properties.lock"
+}
+
 group 'club.guacamoledragon.plugin'
 version '1.0-SNAPSHOT'
