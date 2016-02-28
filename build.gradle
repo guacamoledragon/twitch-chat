@@ -44,6 +44,10 @@ intellij {
     version = 'IC-15.0.4'
 }
 
+release {
+    tagTemplate 'v${version}'
+}
+
 task deleteLockFile(type: Delete) {
     delete ".gradle/$gradle.gradleVersion/taskArtifacts/cache.properties.lock"
 }
