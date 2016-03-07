@@ -12,7 +12,7 @@ buildscript {
 
 plugins {
     id "org.jetbrains.intellij" version "0.0.40"
-    id 'net.researchgate.release' version '2.3.4'
+    id 'pl.allegro.tech.build.axion-release' version '1.3.4'
 }
 
 apply plugin: 'org.jetbrains.intellij'
@@ -44,8 +44,24 @@ intellij {
     version = 'IC-15.0.4'
 }
 
-release {
-    tagTemplate = 'v$version'
+scmVersion {
+    versionIncrementer 'incrementMinor'
+    tag {
+        prefix = ''
+    }
+
+    String pluginPath = "src/main/resources/META-INF/plugin.xml"
+
+    hooks {
+        pre 'fileUpdate', [ file: pluginPath
+                          , pattern: {v, c -> /(<version>)${c.readVersion()}/}
+                          , replacement: {v, c -> "\$1$v"}
+                          ]
+
+        pre { c -> c.addCommitPattern(pluginPath) }
+
+        pre 'commit'
+    }
 }
 
 task deleteLockFile(type: Delete) {
