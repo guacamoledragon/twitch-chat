@@ -69,3 +69,4 @@ task deleteLockFile(type: Delete) {
 }
 
 group 'club.guacamoledragon.plugin'
+version scmVersion.version
