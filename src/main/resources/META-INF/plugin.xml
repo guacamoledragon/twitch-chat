@@ -1,7 +1,7 @@
 <idea-plugin version="2">
     <id>club.guacamoledragon.plugin.twitch-chat</id>
     <name>Twitch Chat</name>
-    <version>1.2.0-SNAPSHOT</version>
+    <version>1.2.0</version>
     <vendor email="support@guacamoledragon.club" url="http://guacamoledragon.club">Guacamole Dragon</vendor>
 
     <description><![CDATA[
@@ -10,6 +10,11 @@
 
     <change-notes><![CDATA[
       <html>
+        <b>Version 1.2.0</b>
+        <ul>
+            <li>Updated project to be compatible with IntelliJ 2016.1.</li>
+        </ul>
+
         <b>Version 1.1.0</b>
         <p>Mainly working on the build side of things. These changes don't affect anything on the user side.</p>
         <ul>
@@ -17,6 +22,7 @@
           <li>The project's license is now Apache 2.0.</li>
           <li>Using CircleCI to ensure that project builds. <em>Eventually, will be deploying using this CI.</em></li>
         </ul>
+
         <b>Version 1.0</b>
         <ul>
           <li>First release! Nothing really crazy here.</li>
