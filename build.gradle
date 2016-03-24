@@ -41,7 +41,7 @@ idea {
 }
 
 intellij {
-    version = 'IC-15.0.4'
+    version = 'IC-2016.1'
 }
 
 scmVersion {
